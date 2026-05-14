@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ตั้งค่าระบบ</title>
+  <title>ຕັ້ວຄ່າລະບົບ</title>
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
   <script src="js/api-config.js"></script>
   <style>
@@ -186,9 +186,9 @@
 <div class="container">
 
   <div class="page-header">
-    <a href="index.html" class="back-btn">← กลับ</a>
-    <h2>⚙️ ตั้งค่าระบบ</h2>
-    <p class="page-subtitle">จัดการ API และจุดเช็คอิน GPS</p>
+    <a href="index.html" class="back-btn">← ກັບ</a>
+    <h2>⚙️ ຕັ້ງຄ່າລະບົບ</h2>
+    <p class="page-subtitle">ຈັດການ API ແລະຈຸດເຊັກອິນ GPS</p>
   </div>
 
   <!-- API URL Card -->
@@ -200,18 +200,18 @@
 
     <label>WEB APP URL</label>
     <input type="url" id="apiUrl" placeholder="https://script.google.com/macros/s/.../exec">
-    <p class="note">Deploy GAS แล้วนำ URL มาวางที่นี่ (Execute as: Me / Anyone can access)</p>
+    <p class="note">Deploy GAS ແລ້ວນຳ URL ມາວາງທີ່ນີ້ (Execute as: Me / Anyone can access)</p>
   </div>
 
   <!-- GPS Config Card -->
   <div class="card">
     <div class="section-header">
       <div class="section-icon cyan">📍</div>
-      <span class="section-title-text">จุดเช็คอิน GPS</span>
+      <span class="section-title-text">ຈຸດເຊັກອິນ GPS</span>
     </div>
 
     <button class="btn btn-get-loc" onclick="getCurrentLocation()">
-      📍 ดึงตำแหน่งปัจจุบันของฉัน
+      📍 ດືງຕຳແໜ່ງປັດຈຸບັນຂອງຕົນເອງ
     </button>
 
     <div class="input-row">
@@ -225,18 +225,18 @@
       </div>
     </div>
 
-    <label>รัศมีที่ยอมรับ (กิโลเมตร)</label>
-    <input type="number" step="0.01" id="radius" placeholder="เช่น 0.1 คือ 100 เมตร">
-    <p class="note">* ใส่ 0 หากไม่ต้องการจำกัดพื้นที่</p>
+    <label>ລັດສະໝີທີ່ຍອມຮັບ (ກິໂລແມັດ)</label>
+    <input type="number" step="0.01" id="radius" placeholder="ເຊັ່ນ 0.1 ຄື 100 ແມັດ">
+    <p class="note">* ໃສ່ 0 ຫາກບໍ່ຕ້ອງການຈຳກັດພື້ນທີ່</p>
   </div>
 
   <!-- Actions -->
   <button class="btn btn-save" onclick="saveAll()">
-    💾 บันทึกการตั้งค่าทั้งหมด
+    💾 ບັນທຶກການຕັ້ງຄ່າທັງໝົດ
   </button>
   <div id="msg"></div>
 
-  <a href="index.html" class="btn-back">← กลับเมนูหลัก</a>
+  <a href="index.html" class="btn-back">← ກັບເມນູຫຼັກ</a>
 </div>
 
 <script>
@@ -264,14 +264,14 @@
   }
 
   function getCurrentLocation() {
-    if (!navigator.geolocation) return alert('Browser นี้ไม่รองรับ Geolocation');
+    if (!navigator.geolocation) return alert('Browser ນີ້ບໍ່ຮອງຮັບ Geolocation');
     navigator.geolocation.getCurrentPosition(
       pos => {
         document.getElementById('lat').value = pos.coords.latitude;
         document.getElementById('lng').value = pos.coords.longitude;
-        alert('✅ ดึงพิกัดเรียบร้อย');
+        alert('✅ ດືງພິກັດສຳເລັດ');
       },
-      err => alert('❌ ไม่สามารถดึงตำแหน่งได้: ' + err.message)
+      err => alert('❌ ບໍ່ສາມາດດຶງຕຳແໜ່ງໄດ້: ' + err.message)
     );
   }
 
@@ -281,12 +281,12 @@
     const lng    = document.getElementById('lng').value;
     const radius = document.getElementById('radius').value;
 
-    if (!apiUrl) return showMsg('❌ กรุณากรอก API URL', 'error');
-    if (!lat || !lng || !radius) return showMsg('❌ กรุณากรอกข้อมูล GPS ให้ครบ', 'error');
+    if (!apiUrl) return showMsg('❌ ກະລຸນາພິມ API URL', 'error');
+    if (!lat || !lng || !radius) return showMsg('❌ ກະລຸນາພິມຂໍ້ມູນ GPS ໃຫ້ຄົບ', 'error');
 
     // บันทึก API URL ลง localStorage
     localStorage.setItem('gasApiUrl', apiUrl);
-    showMsg('⏳ กำลังบันทึก...', '');
+    showMsg('⏳ ກຳລັງບັນທຶກ...', '');
 
     try {
       const res = await fetch(apiUrl, {
@@ -294,9 +294,9 @@
         body: JSON.stringify({ action: 'saveConfig', lat, lng, radius })
       });
       const data = await res.json();
-      showMsg('✅ ' + (data.message || 'บันทึกสำเร็จ'), 'success');
+      showMsg('✅ ' + (data.message || 'ບັນທຶກສຳເລັດ'), 'success');
     } catch (e) {
-      showMsg('❌ เชื่อมต่อ API ไม่ได้: ' + e.message, 'error');
+      showMsg('❌ ເຊື່ອມຕໍ່ API ບໍ່ໄດ້: ' + e.message, 'error');
     }
   }
 
