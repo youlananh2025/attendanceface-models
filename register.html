@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ลงทะเบียนใบหน้า</title>
+  <title>ລົງທະບຽນໃບໜ້າ</title>
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
   <script src="js/api-config.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.js"></script>
@@ -206,8 +206,8 @@
 <div class="container">
   <div class="page-header">
     <a href="index.html" class="back-btn">← กลับ</a>
-    <h2>👤 ลงทะเบียนใบหน้า</h2>
-    <p class="instruction">บันทึก 3 มุม: หน้าตรง / หันซ้ายเล็กน้อย / หันขวาเล็กน้อย<br>เพื่อความแม่นยำสูงสุด</p>
+    <h2>👤 ລົງທະບຽນໃບໜ້າ</h2>
+    <p class="instruction">ບັນທຶກ 3 ມຸມ: ທາງໜ້າ / ຫັນຊ້າຍ / ຫັນຂວາ<br>ເພື່ອຄວາມຖືກຕ້ອງສູງສຸດ</p>
   </div>
 
   <div class="step-dots">
@@ -217,7 +217,7 @@
   </div>
 
   <div id="status">
-    <span class="spinner"></span> กำลังโหลด AI Model...
+    <span class="spinner"></span> ກຳລັງໂຫຼດ AI Model...
   </div>
 
   <div class="video-wrapper">
@@ -226,11 +226,11 @@
 
   <div class="form-section">
     <div class="input-group">
-      <input type="text" id="username" placeholder="ชื่อ-นามสกุลพนักงาน">
+      <input type="text" id="username" placeholder="ຊື່ແລະນາມສະກຸນພະນັກງານ">
     </div>
 
     <button id="btnSave" onclick="saveFace()" disabled>
-      📸 บันทึกใบหน้า <span id="saveCount" class="count-badge">0</span>
+      📸 ບັນທຶກໃບໜ້າ <span id="saveCount" class="count-badge">0</span>
     </button>
 
     <div id="msg"></div>
@@ -247,7 +247,7 @@
   let saveCounter = 0;
 
   if (!API_URL) {
-    statusDiv.innerHTML = '<span style="color:#f87171">❌ ยังไม่ได้ตั้งค่า API URL — <a href="config.html" style="color:#fbbf24">ไปตั้งค่า</a></span>';
+    statusDiv.innerHTML = '<span style="color:#f87171">❌ ຍັງບໍ່ໄດ້ຕັ້ງຄ່າ API URL — <a href="config.html" style="color:#fbbf24">ໄປຕັ້ງຄ່າ</a></span>';
   } else {
     window.addEventListener('load', initModels);
   }
@@ -269,7 +269,7 @@
       ]);
       startCamera();
     } catch (e) {
-      statusDiv.innerHTML = '<span style="color:#f87171">❌ โหลด AI Model ล้มเหลว: ' + e.message + '</span>';
+      statusDiv.innerHTML = '<span style="color:#f87171">❌ ໂຫຼດ AI Model ລົ້ມເຫຼວ: ' + e.message + '</span>';
     }
   }
 
@@ -281,16 +281,16 @@
         btnSave.disabled = false;
       })
       .catch(err => {
-        statusDiv.innerHTML = '<span style="color:#f87171">❌ เปิดกล้องไม่ได้: ' + err.message + '</span>';
+        statusDiv.innerHTML = '<span style="color:#f87171">❌ ເປີດກ້ອງບໍ່ໄດ້: ' + err.message + '</span>';
       });
   }
 
   async function saveFace() {
     const name = document.getElementById('username').value.trim();
-    if (!name) return alert('กรุณาใส่ชื่อก่อน');
+    if (!name) return alert('ກະລຸນາໃສ່ຊື່ກ່ອນ');
 
     btnSave.disabled = true;
-    btnSave.innerHTML = '⏳ กำลังประมวลผล... <span class="count-badge">' + saveCounter + '</span>';
+    btnSave.innerHTML = '⏳ ກຳລັງປະມວນຜົນ... <span class="count-badge">' + saveCounter + '</span>';
     msgDiv.innerText = '';
 
     const detection = await faceapi
@@ -299,9 +299,9 @@
       .withFaceDescriptor();
 
     if (!detection) {
-      alert('ไม่พบใบหน้า! กรุณามองกล้องให้ชัดเจน');
+      alert('ບໍ່ພົບໃບໜ້າ! ກະລຸນາເບິ່ງກ້ອງໃຫ້ຊັດເຈນ');
       btnSave.disabled = false;
-      btnSave.innerHTML = '📸 บันทึกใบหน้า <span class="count-badge" id="saveCount">' + saveCounter + '</span>';
+      btnSave.innerHTML = '📸 ບັນທຶກໃບໜ້າ <span class="count-badge" id="saveCount">' + saveCounter + '</span>';
       return;
     }
 
@@ -317,13 +317,13 @@
       saveCounter++;
       countSpan.innerText = saveCounter;
       updateDots();
-      msgDiv.innerHTML = '<span class="msg-success">✅ บันทึกครั้งที่ ' + saveCounter + ' สำเร็จ! ขยับหน้าเล็กน้อยแล้วกดอีกครั้ง</span>';
+      msgDiv.innerHTML = '<span class="msg-success">✅ ບັນທຶກຄັ້ງທີ ' + saveCounter + ' ສຳເລັດ! ເໜັງຕີງໃບໜ້າໜ້ອຍໜຶ່ງແລ້ວກົດອີກຄັ້ງ</span>';
       btnSave.disabled = false;
-      btnSave.innerHTML = '📸 บันทึกเพิ่ม <span class="count-badge" id="saveCount">' + saveCounter + '</span>';
+      btnSave.innerHTML = '📸 ບັນທຶກເພີ່ມ <span class="count-badge" id="saveCount">' + saveCounter + '</span>';
     } catch (e) {
-      msgDiv.innerHTML = '<span class="msg-error">❌ บันทึกล้มเหลว: ' + e.message + '</span>';
+      msgDiv.innerHTML = '<span class="msg-error">❌ ບັນທຶກລົ້ມເຫຼວ: ' + e.message + '</span>';
       btnSave.disabled = false;
-      btnSave.innerHTML = '📸 บันทึกใบหน้า <span class="count-badge" id="saveCount">' + saveCounter + '</span>';
+      btnSave.innerHTML = '📸 ບັນທຶກໃບໜ້າ <span class="count-badge" id="saveCount">' + saveCounter + '</span>';
     }
   }
 </script>
