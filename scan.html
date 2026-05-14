@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>สแกนเข้างาน</title>
+  <title>ສະແກນເຂົ້າວຽກ</title>
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
   <script src="js/api-config.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.js"></script>
@@ -258,21 +258,21 @@
 <div class="page-wrap">
 
   <div class="top-bar">
-    <a href="index.html" class="back-btn">← กลับ</a>
-    <h2>📷 สแกนเข้างาน</h2>
+    <a href="index.html" class="back-btn">← ກັບ</a>
+    <h2>📷 ສະແກນເຂົ້າວຽກ</h2>
     <div class="spacer"></div>
   </div>
 
   <div class="status-area">
-    <div id="main-status">⏳ กำลังเตรียมระบบ...</div>
+    <div id="main-status">⏳ ກຳລັງກຽມລະບົບ...</div>
     <div id="gps-status"></div>
   </div>
 
   <div id="gps-alert-box" class="gps-alert">
-    ⚠️ คุณอยู่นอกพื้นที่ที่กำหนด!<br>กรุณาเข้าใกล้จุดเช็คอินแล้วรีเฟรชหน้าจอ
+    ⚠️ ທ່ານຢູ່ນອກພື້ນທີ່ທີ່ກຳນົດ!<br>ກະລຸນາເຂົ້າໃກ້ຈຸດເຊັກອິນແລ້ວ refresh ໜ້າຈໍ
   </div>
 
-  <button id="btnStart" onclick="startCamera()">📷 แตะเพื่อเริ่มสแกน</button>
+  <button id="btnStart" onclick="startCamera()">📷 ກົດເພື່ອເລີ່ມສະແກນ</button>
 
   <div class="video-container">
     <div class="scanner-frame">
@@ -282,7 +282,7 @@
       <div class="corner corner-br"></div>
       <div class="scan-line" id="scanLine"></div>
     </div>
-    <div id="overlay-status">รอโหลด...</div>
+    <div id="overlay-status">ລໍຖ້າໂຫຼດ...</div>
     <video id="video" autoplay muted playsinline></video>
   </div>
 
@@ -292,12 +292,12 @@
 <div id="confirmModal" class="modal-overlay">
   <div class="modal-content">
     <div class="modal-avatar">🙋</div>
-    <p class="modal-title">ตรวจพบบุคคล</p>
+    <p class="modal-title">ກວດພົບບຸກຄົນ</p>
     <div class="user-name" id="modalName">...</div>
     <div id="modalTime" class="time-badge">00:00</div>
     <div id="modalScore" class="score-text"></div>
-    <button class="btn btn-confirm" id="btnConfirm" onclick="confirmAttendance()">✅ ยืนยันเข้างาน</button>
-    <button class="btn btn-cancel" onclick="cancelAttendance()">ไม่ใช่ฉัน</button>
+    <button class="btn btn-confirm" id="btnConfirm" onclick="confirmAttendance()">✅ ຢືນຢັນເຂົ້າວຽກ</button>
+    <button class="btn btn-cancel" onclick="cancelAttendance()">ບໍ່ແມ່ນຂ້ອຍ</button>
   </div>
 </div>
 
@@ -321,14 +321,14 @@
 
   // ===== Init =====
   if (!API_URL) {
-    showError('ยังไม่ได้ตั้งค่า API URL — <a href="config.html" style="color:#fbbf24">ไปตั้งค่า</a>');
+    showError('ຍັງບໍ່ໄດ້ຕັ້ງຄ່າ API URL — <a href="config.html" style="color:#fbbf24">ໄປຕັ້ງຄ່າ</a>');
   } else {
     window.addEventListener('load', init);
   }
 
   async function init() {
     try {
-      mainStatus.innerText = '1/4 ตรวจสอบ GPS...';
+      mainStatus.innerText = '1/4 ກວດສອບ GPS...';
       await checkGPS();
     } catch (e) {
       showError(e.message);
@@ -339,7 +339,7 @@
   function checkGPS() {
     return new Promise((resolve, reject) => {
       if (!navigator.geolocation) {
-        reject(new Error('Browser ไม่รองรับ GPS'));
+        reject(new Error('Browser ບໍ່ຮອງຮັບ GPS'));
         return;
       }
       navigator.geolocation.getCurrentPosition(
@@ -351,7 +351,7 @@
             const config = await fetch(API_URL + '?action=getConfig').then(r => r.json());
 
             if (!config.lat || !config.lng || config.radius == 0) {
-              gpsStatus.innerHTML = '<span style="color:#34d399">📍 GPS: ไม่จำกัดพื้นที่</span>';
+              gpsStatus.innerHTML = '<span style="color:#34d399">📍 GPS: ບໍ່ຈຳກັດພື້ນທີ່</span>';
               resolve();
               initFaceSystem();
               return;
@@ -360,27 +360,27 @@
             const dist = haversineKm(currentLat, currentLng, config.lat, config.lng);
 
             if (dist <= config.radius) {
-              gpsStatus.innerHTML = '<span style="color:#34d399">📍 GPS: OK (ห่างเป้าหมาย ' + dist.toFixed(3) + ' km)</span>';
+              gpsStatus.innerHTML = '<span style="color:#34d399">📍 GPS: OK (ຫ່າງເປົ້າໝາຍ ' + dist.toFixed(3) + ' km)</span>';
               resolve();
               initFaceSystem();
             } else {
-              gpsStatus.innerHTML = '<span style="color:#f87171">📍 GPS: ห่างเกินไป (' + dist.toFixed(3) + ' km / กำหนด ' + config.radius + ' km)</span>';
+              gpsStatus.innerHTML = '<span style="color:#f87171">📍 GPS: ຫ່າງເກີນໄປ (' + dist.toFixed(3) + ' km / ກຳນົດ ' + config.radius + ' km)</span>';
               gpsAlertBox.style.display = 'block';
-              mainStatus.innerText = '⛔ ไม่อนุญาตให้สแกน';
+              mainStatus.innerText = '⛔ ບໍ່ອະນຸຍາດໃຫ້ສະແກນ';
               overlayStatus.innerText = 'Out of Range';
             }
           } catch (e) {
-            reject(new Error('เชื่อมต่อ API ไม่ได้: ' + e.message));
+            reject(new Error('ເຊື່ອມຕໍ່ API ບໍ່ໄດ້: ' + e.message));
           }
         },
-        () => reject(new Error('กรุณาเปิด GPS (Location Service)'))
+        () => reject(new Error('ກະລຸນາເປີດ GPS (Location Service)'))
       );
     });
   }
 
   // ===== Load AI =====
   async function initFaceSystem() {
-    mainStatus.innerText = '2/4 โหลด AI Model...';
+    mainStatus.innerText = '2/4 ໂຫຼດ AI Model...';
     const MODEL_URL = 'https://justadudewhohacks.github.io/face-api.js/models';
     try {
       await Promise.all([
@@ -390,47 +390,47 @@
       ]);
       loadFaceDatabase();
     } catch (e) {
-      showError('โหลด AI Model ล้มเหลว: ' + e.message);
+      showError('ໂຫຼດ AI Model ລົ້ມເຫຼວ: ' + e.message);
     }
   }
 
   // ===== Load DB =====
   async function loadFaceDatabase() {
-    mainStatus.innerText = '3/4 โหลดฐานข้อมูลพนักงาน...';
+    mainStatus.innerText = '3/4 ໂຫຼດຖານຂໍ້ມູນພະນັກງານ...';
     try {
       const data = await fetch(API_URL + '?action=getKnownFaces').then(r => r.json());
-      if (!data || data.length === 0) return showError('ไม่พบข้อมูลพนักงาน กรุณาลงทะเบียนก่อน');
+      if (!data || data.length === 0) return showError('ບໍ່ພົບຂໍ້ມູນພະນັກງານ ກະລຸນາລົງທະບຽນກ່ອນ');
 
       knownFaces = data.map(u => ({
         name: u.label,
         descriptor: new Float32Array(u.descriptor)
       }));
 
-      mainStatus.innerText    = '✅ ระบบพร้อมใช้งาน';
+      mainStatus.innerText    = '✅ ລະບົບພ້ອມໃຊ້ງານ';
       mainStatus.style.color  = '#34d399';
       btnStart.style.display  = 'inline-block';
     } catch (e) {
-      showError('โหลดฐานข้อมูลล้มเหลว: ' + e.message);
+      showError('ໂຫຼດຖານຂໍ້ມູນລົ້ມເຫຼວ: ' + e.message);
     }
   }
 
   // ===== Camera =====
   function startCamera() {
     btnStart.style.display = 'none';
-    mainStatus.innerText   = 'กำลังเปิดกล้อง...';
+    mainStatus.innerText   = 'ກຳລັງເປີດກ້ອງ...';
     mainStatus.style.color = '#94a3b8';
 
     navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } })
       .then(stream => {
         video.srcObject = stream;
         video.classList.add('active');
-        mainStatus.innerText   = '✅ กำลังสแกน...';
+        mainStatus.innerText   = '✅ ກຳລັງສະແກນ...';
         mainStatus.style.color = '#34d399';
         document.getElementById('scanLine').classList.add('active');
         startScanLoop();
       })
       .catch(err => {
-        showError('เปิดกล้องไม่ได้: ' + err.message);
+        showError('ເປີດກ້ອງບໍ່ໄດ້: ' + err.message);
         btnStart.style.display = 'inline-block';
       });
   }
@@ -438,7 +438,7 @@
   // ===== Scan Loop =====
   function startScanLoop() {
     if (scanInterval) clearInterval(scanInterval);
-    overlayStatus.innerText     = 'มองกล้องเพื่อสแกน';
+    overlayStatus.innerText     = 'ເບິ່ງກ້ອງເພື່ອສະແກນ';
     overlayStatus.style.background = 'rgba(0,0,0,0.65)';
 
     scanInterval = setInterval(async () => {
@@ -456,7 +456,7 @@
           document.getElementById('scanLine').classList.remove('active');
           showModal(best);
         } else {
-          overlayStatus.innerText            = 'ไม่รู้จัก (' + best.distance.toFixed(2) + ')';
+          overlayStatus.innerText            = 'ບໍ່ຮູ້ຈັກ (' + best.distance.toFixed(2) + ')';
           overlayStatus.style.background     = 'rgba(239,68,68,0.6)';
         }
       }
@@ -479,19 +479,19 @@
 
     const now = new Date();
     const timeStr = now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
-    document.getElementById('modalTime').innerText  = 'เวลาเข้างาน: ' + timeStr + ' น.';
+    document.getElementById('modalTime').innerText  = 'ເວລາເຂົ້າວຽກ: ' + timeStr + ' ນ.';
 
     const pct = ((1 - match.distance) * 100).toFixed(1);
-    document.getElementById('modalScore').innerText = 'ความเหมือน: ' + pct + '%';
+    document.getElementById('modalScore').innerText = 'ຄວາມຄ້າຍຄື: ' + pct + '%';
 
     confirmModal.style.display = 'flex';
-    mainStatus.innerText = 'กรุณายืนยัน...';
+    mainStatus.innerText = 'ກະລຸນາຢຶນຢັນ...';
   }
 
   async function confirmAttendance() {
     const btn = document.getElementById('btnConfirm');
     btn.disabled   = true;
-    btn.innerText  = 'กำลังบันทึก...';
+    btn.innerText  = 'ກຳລັງບັນທຶກ...';
 
     try {
       const res = await fetch(API_URL, {
@@ -499,12 +499,12 @@
         body: JSON.stringify({ action: 'logAttendance', name: currentMatch, lat: currentLat, lng: currentLng })
       });
       const data = await res.json();
-      alert('✅ ' + (data.message || 'บันทึกเวลาสำเร็จ'));
+      alert('✅ ' + (data.message || 'ບັນທຶກເວລາສຳເລັດ'));
       window.location.href = 'index.html';
     } catch (e) {
-      alert('❌ บันทึกล้มเหลว: ' + e.message);
+      alert('❌ ບັນທຶກລົ້ມເຫຼວ: ' + e.message);
       btn.disabled  = false;
-      btn.innerText = '✅ ยืนยันเข้างาน';
+      btn.innerText = '✅ ຢືນຢັນເຂົ້າວຽກ';
     }
   }
 
@@ -520,9 +520,9 @@
     video.classList.remove('active');
     document.getElementById('scanLine').classList.remove('active');
 
-    mainStatus.innerText    = '✅ ระบบพร้อมใช้งาน';
+    mainStatus.innerText    = '✅ ລະບົບພ້ອມໃຊ້ງານ';
     mainStatus.style.color  = '#34d399';
-    overlayStatus.innerText = 'รอโหลด...';
+    overlayStatus.innerText = 'ລໍຖ້າໂຫຼດ...';
     overlayStatus.style.background = 'rgba(0,0,0,0.65)';
     btnStart.style.display  = 'inline-block';
   }
