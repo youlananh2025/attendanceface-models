@@ -1,6 +1,6 @@
 // ============================================================
 //  GOOGLE APPS SCRIPT — REST API Backend
-//  วิธีใช้: Deploy > New deployment > Web App
+//  ວິທີໃຊ້: Deploy > New deployment > Web App
 //           Execute as: Me | Who has access: Anyone
 // ============================================================
 
@@ -49,14 +49,14 @@ function doPost(e) {
     .setMimeType(ContentService.MimeType.JSON);
 }
 
-// --- ส่วนจัดการใบหน้า (Users) ---
+// --- ສ່ວນຈັດການໃບໜ້າ (Users) ---
 function registerUser(name, faceDescriptor) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = ss.getSheetByName('Users');
   if (!sheet) sheet = ss.insertSheet('Users');
 
   sheet.appendRow([name, JSON.stringify(faceDescriptor), new Date()]);
-  return { success: true, message: 'บันทึกข้อมูลหน้าเรียบร้อย' };
+  return { success: true, message: 'ບັນທຶກຂໍ້ມູນໃບໜ້າສຳເລັດ' };
 }
 
 function getKnownFaces() {
@@ -80,7 +80,7 @@ function getKnownFaces() {
   return users;
 }
 
-// --- ส่วนบันทึกเวลา (Attendance) ---
+// --- ສ່ວນບັນທຶກເວລາ (Attendance) ---
 function logAttendance(name, lat, lng) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = ss.getSheetByName('Attendance');
@@ -102,10 +102,10 @@ function logAttendance(name, lat, lng) {
     lng || '-',
     mapLink
   ]);
-  return { success: true, message: 'บันทึกเวลาสำเร็จ' };
+  return { success: true, message: 'ບັນທຶກເວລາສຳເລັດ' };
 }
 
-// --- ส่วนจัดการ Config (GPS) ---
+// --- ສ່ວນຈັດການ Config (GPS) ---
 function saveConfig(lat, lng, radius) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   let sheet = ss.getSheetByName('Config');
@@ -123,7 +123,7 @@ function saveConfig(lat, lng, radius) {
   sheet.getRange('B3').setValue(lng);
   sheet.getRange('B4').setValue(radius);
 
-  return { success: true, message: 'บันทึกการตั้งค่าลง Google Sheets เรียบร้อย' };
+  return { success: true, message: 'ບັນທືກການຕັ້ງຄ່າລົງ Google Sheets ຮຽບຮ້ອຍ' };
 }
 
 function getConfig() {
